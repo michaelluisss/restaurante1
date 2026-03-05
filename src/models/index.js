@@ -15,6 +15,7 @@ const db = {};
   config.password, 
   config);
 
+console.log("Conectando em:", config.host);
 
 fs
   .readdirSync(__dirname)
