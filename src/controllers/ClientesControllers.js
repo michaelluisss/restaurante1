@@ -1,7 +1,34 @@
 const {clientes} = require("../models/")
 class ClientesControllers{
+  async store(req,res) {
+    try {
+           const { nome, idade,uf } = req.body;
+
+        if (!nome || !idade || !uf ) {
+           return res.status(400).json({ message: "Todos os campos são obrigatórios!" });
+        }
+
+        const funcionarioAlreadyExists = await clientes.findOne({ 
+            where: {  nome,idade }
+        });
+
+        if (funcionarioAlreadyExists) {
+            return res.status(400).json({ message: "Esse cliente já existe!" });
+        }
+
+        const createdFuncionario = await clientes.create({ nome, idade,uf });
+        
+        return res.status(200).json(createdFuncionario);      
+    } catch (error) {
+        return res.status(400).json({ message: "Erro ao tentar adicionar cliente!" });
+      
+    }
+  }
+
   async index(req, res) {
     try {
+      const cliente= await clientes.findAll()
+      return res.status(200).json(cliente)
 
     } catch (error) {
       console.error(error);
@@ -11,7 +38,12 @@ class ClientesControllers{
 
   async show(req, res) {
     try {
-
+      const {id} = req.params;
+      const cliente = await clientes.findByPk(id)
+      if(!cliente){
+            return res.status(404).json({ message: "Cliente não encontrado!"});
+        }
+        return res.status(200).json(cliente);
     } catch (error) {
       console.error(error);
       return res.status(500).json({ message: "Erro ao buscar o dado específico." });

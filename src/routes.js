@@ -2,6 +2,9 @@ const { Router } = require("express");
 
 const UserControllers = require("./controllers/UserControllers");
 const FuncionariosControllers = require("./controllers/FuncionariosControllers");
+const ClientesControllers = require("./controllers/ClientesControllers");
+const CardapioControllers = require("./controllers/CardapioControllers");
+
 
 const routes = Router();
 
@@ -23,7 +26,17 @@ routes.put('/funcionario/:id', FuncionariosControllers.update);
 routes.delete('/funcionario/:id', FuncionariosControllers.destroy);
 
 //controle de clientes
-
+routes.post('/clientes', ClientesControllers.store);
+routes.get('/clientes', ClientesControllers.index);
+routes.get('/cliente/:id', ClientesControllers.show);
+routes.put('/cliente/:id', ClientesControllers.update);
+routes.delete('/cliente/:id', ClientesControllers.destroy);
 //controle do cardapio
+
+routes.post('/cardapio', CardapioControllers.store);
+routes.get('/cardapio', CardapioControllers.index);
+routes.get('/cardapio/:id', CardapioControllers.show);
+routes.put('/cardapio/:id', CardapioControllers.update);
+routes.delete('/cardapio/:id', CardapioControllers.destroy);
 
 module.exports = routes;
