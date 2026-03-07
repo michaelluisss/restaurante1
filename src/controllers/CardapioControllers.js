@@ -1,35 +1,35 @@
-const {cardapio} = require("../models/")
-class CardapioControllers{
-  async store(req,res) {
+const { cardapio: Cardapio } = require("../models/")
+
+class CardapioControllers {
+  async store(req, res) {
     try {
-           const { nome, idade,uf } = req.body;
+      const { nome, detalhes, valor, categoria, disponivel } = req.body;
 
-        if (!nome || !idade || !uf ) {
-           return res.status(400).json({ message: "Todos os campos são obrigatórios!" });
-        }
+      if (!nome || !detalhes || !valor || !categoria || disponivel === undefined) {
+        return res.status(400).json({ message: "Todos os campos são obrigatórios!" });
+      }
 
-        const funcionarioAlreadyExists = await cardapio.findOne({ 
-            where: {  nome,idade }
-        });
+      const itemAlreadyExists = await Cardapio.findOne({
+        where: { nome, detalhes }
+      });
 
-        if (funcionarioAlreadyExists) {
-            return res.status(400).json({ message: "Esse cardapio já existe!" });
-        }
+      if (itemAlreadyExists) {
+        return res.status(400).json({ message: "Esse item no cardapio já existe!" });
+      }
 
-        const createdFuncionario = await cardapio.create({ nome, idade,uf });
-        
-        return res.status(200).json(createdFuncionario);      
+      const createdItem = await Cardapio.create({ nome, detalhes, valor, categoria, disponivel });
+      return res.status(201).json(createdItem);
+
     } catch (error) {
-        return res.status(400).json({ message: "Erro ao tentar adicionar no cardapio!" });
-      
+      console.error(error);
+      return res.status(500).json({ message: "Erro ao tentar adicionar o item no cardapio!" });
     }
   }
 
   async index(req, res) {
     try {
-      const cardapio= await cardapio.findAll()
-      return res.status(200).json(cardapio)
-
+      const itens = await Cardapio.findAll();
+      return res.status(200).json(itens);
     } catch (error) {
       console.error(error);
       return res.status(500).json({ message: "Erro ao listar os dados." });
@@ -38,12 +38,14 @@ class CardapioControllers{
 
   async show(req, res) {
     try {
-      const {id} = req.params;
-      const cardapio = await cardapio.findByPk(id)
-      if(!cardapio){
-            return res.status(404).json({ message: "Cardapio não encontrado!"});
-        }
-        return res.status(200).json(cardapio);
+      const { id } = req.params;
+      const item = await Cardapio.findByPk(id);
+
+      if (!item) {
+        return res.status(404).json({ message: "Item não encontrado!" });
+      }
+
+      return res.status(200).json(item);
     } catch (error) {
       console.error(error);
       return res.status(500).json({ message: "Erro ao buscar o dado específico." });
@@ -52,16 +54,20 @@ class CardapioControllers{
 
   async update(req, res) {
     try {
-      const {id} = req.params;
-      const {nome,idade,uf} = req.body;
-      await cardapio.update(
-          {nome,idade,uf},
-          {where:{
-              id:id
-          }}
-      );
-      return res.status(200).json({message : "Cardapio atualizado!"})
+      const { id } = req.params;
+      const { nome, detalhes, valor, categoria, disponivel } = req.body;
 
+      const item = await Cardapio.findByPk(id);
+      if (!item) {
+        return res.status(404).json({ message: "Item não encontrado!" });
+      }
+
+      await Cardapio.update(
+        { nome, detalhes, valor, categoria, disponivel },
+        { where: { id } }
+      );
+
+      return res.status(200).json({ message: "Cardapio atualizado!" });
     } catch (error) {
       console.error(error);
       return res.status(500).json({ message: "Erro ao atualizar os dados." });
@@ -70,13 +76,15 @@ class CardapioControllers{
 
   async destroy(req, res) {
     try {
-        const {id} = req.params;
-        await cardapio.destroy(
-            {where:{
-                id:id
-            }}
-        );
+      const { id } = req.params;
 
+      const item = await Cardapio.findByPk(id);
+      if (!item) {
+        return res.status(404).json({ message: "Item não encontrado!" });
+      }
+
+      await Cardapio.destroy({ where: { id } });
+      return res.status(200).json({ message: "Item deletado!" });
     } catch (error) {
       console.error(error);
       return res.status(500).json({ message: "Erro ao deletar o dado." });

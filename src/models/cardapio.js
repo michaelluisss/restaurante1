@@ -18,7 +18,15 @@ module.exports = function(sequelize, DataTypes) {
     valor: {
       type: DataTypes.DECIMAL,
       allowNull: false
-    }
+    },
+    categoria:{
+     type: DataTypes.STRING,
+     allowNull: false
+    } ,
+    disponivel:{
+      type: DataTypes.BOOLEAN,
+      allowNull: false
+    }, 
   }, {
     sequelize,
     tableName: 'cardapio',

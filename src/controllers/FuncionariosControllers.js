@@ -1,6 +1,5 @@
 const { funcionarios } = require("../models/");
 class FuncionariosControllers{
-  // Adicionar funcionarios
     async store(req, res) {
       try {
           const { nome, cargo , salario, idade } = req.body;
@@ -75,7 +74,7 @@ class FuncionariosControllers{
                 id:id
             }}
         );
-
+        return res.status(200).json({ message: "Funcionario deletado!" });
     } catch (error) {
       console.error(error);
       return res.status(500).json({ message: "Erro ao deletar o dado." });

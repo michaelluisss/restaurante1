@@ -28,9 +28,9 @@ routes.delete('/funcionario/:id', FuncionariosControllers.destroy);
 //controle de clientes
 routes.post('/clientes', ClientesControllers.store);
 routes.get('/clientes', ClientesControllers.index);
-routes.get('/cliente/:id', ClientesControllers.show);
-routes.put('/cliente/:id', ClientesControllers.update);
-routes.delete('/cliente/:id', ClientesControllers.destroy);
+routes.get('/clientes/:id', ClientesControllers.show);
+routes.put('/clientes/:id', ClientesControllers.update);
+routes.delete('/clientes/:id', ClientesControllers.destroy);
 //controle do cardapio
 
 routes.post('/cardapio', CardapioControllers.store);
