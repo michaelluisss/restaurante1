@@ -13,7 +13,8 @@ module.exports = function(sequelize, DataTypes) {
     },
     status: {
       type: DataTypes.ENUM('livre','ocupada','fechando'),
-      allowNull: true
+      defaultValue:'livre',
+      allowNull: false
     } 
   }, {
     sequelize,
