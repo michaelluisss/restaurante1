@@ -1,40 +1,28 @@
 const Sequelize = require('sequelize');
 module.exports = function(sequelize, DataTypes) {
-  return sequelize.define('cardapio', {
+  return sequelize.define('mesas', {
     id: {
       autoIncrement: true,
       type: DataTypes.INTEGER,
       allowNull: false,
       primaryKey: true
     },
-    nome: {
-      type: DataTypes.STRING(100),
+    numero: {
+      type: DataTypes.INTEGER,
       allowNull: false
     },
-    detalhes: {
-      type: DataTypes.STRING(255),
+    status: {
+      type: DataTypes.ENUM('livre','ocupada','fechando'),
       allowNull: true
-    },
-    valor: {
-      type: DataTypes.DECIMAL,
-      allowNull: false
-    },
-    categoria:{
-     type: DataTypes.STRING,
-     allowNull: false
-    } ,
-    disponivel:{
-      type: DataTypes.BOOLEAN,
-      allowNull: false
-    }, 
+    } 
   }, {
     sequelize,
-    tableName: 'cardapio',
+    tableName: 'mesas',
     schema: 'public',
     timestamps: false,
     indexes: [
       {
-        name: "cardapio_pkey",
+        name: "mesas_pkey",
         unique: true,
         fields: [
           { name: "id" },
@@ -43,3 +31,4 @@ module.exports = function(sequelize, DataTypes) {
     ]
   });
 };
+//

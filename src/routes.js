@@ -31,8 +31,8 @@ routes.get('/clientes', ClientesControllers.index);
 routes.get('/clientes/:id', ClientesControllers.show);
 routes.put('/clientes/:id', ClientesControllers.update);
 routes.delete('/clientes/:id', ClientesControllers.destroy);
-//controle do cardapio
 
+//controle do cardapio
 routes.post('/cardapio', CardapioControllers.store);
 routes.get('/cardapio', CardapioControllers.index);
 routes.get('/cardapio/:id', CardapioControllers.show);
