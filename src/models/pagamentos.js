@@ -1,6 +1,6 @@
 const Sequelize = require('sequelize');
 module.exports = function(sequelize, DataTypes) {
-  const pedidos_itens = sequelize.define('pedidos_itens', {
+  const pagamentos = sequelize.define('pagamentos', {
     id: {
       autoIncrement: true,
       type: DataTypes.INTEGER,
@@ -15,32 +15,40 @@ module.exports = function(sequelize, DataTypes) {
        key: 'id'
      }
     },
-    cardapio_id: {
+    caixa_id: {
       type: DataTypes.INTEGER,
       allowNull: false,
       references: {
-       model: 'cardapio',
+       model: 'caixa',
        key: 'id'
      }
     },
-    quantidade: {
-      type: DataTypes.INTEGER,
+    forma_pagamento: {
+      type: DataTypes.ENUM('dinheiro','pix','credito','debito'),
       allowNull: false,
     },
-    preco_unit: {
+    valor_total: {
       type: DataTypes.DECIMAL,
       allowNull: false
+    },
+    valor_pago: {
+      type: DataTypes.DECIMAL,
+      allowNull: false
+    },
+    troco: {
+      type: DataTypes.DECIMAL,
+      allowNull: true
     },
 
     
    }, {
     sequelize,
-    tableName: 'pedidos_itens',
+    tableName: 'pagamentos',
     schema: 'public',
     timestamps: false,
     indexes: [
       {
-        name: "pedidos_itens_pkey",
+        name: "pagamentos_pkey",
         unique: true,
         fields: [
           { name: "id" },
@@ -48,9 +56,9 @@ module.exports = function(sequelize, DataTypes) {
       },
     ]
   });
-   pedidos_itens.associate = (models) => {
-    pedidos_itens.belongsTo(models.pedidos, { foreignKey: 'pedido_id' });
-    pedidos_itens.belongsTo(models.cardapio_id, { foreignKey: 'cardapio_id' });
+   pagamentos.associate = (models) => {
+    pagamentos.belongsTo(models.mesas, { foreignKey: 'mesa_id' });
+    pagamentos.belongsTo(models.clientes, { foreignKey: 'cliente_id' });
   };
-  return pedidos_itens;
+  return pagamentos;
 };
