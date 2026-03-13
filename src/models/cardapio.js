@@ -43,7 +43,7 @@ module.exports = function(sequelize, DataTypes) {
     ]
   });
   cardapio.associate = (models) => {
-  cardapio.hasMany(models.pedido_itens, { foreignKey: 'cardapio_id' });
+  cardapio.hasMany(models.pedidos_itens, { foreignKey: 'cardapio_id' });
 };
 return cardapio;
 };

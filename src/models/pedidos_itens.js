@@ -50,7 +50,7 @@ module.exports = function(sequelize, DataTypes) {
   });
    pedidos_itens.associate = (models) => {
     pedidos_itens.belongsTo(models.pedidos, { foreignKey: 'pedido_id' });
-    pedidos_itens.belongsTo(models.cardapio_id, { foreignKey: 'cardapio_id' });
+    pedidos_itens.belongsTo(models.cardapio, { foreignKey: 'cardapio_id' });
   };
   return pedidos_itens;
 };
