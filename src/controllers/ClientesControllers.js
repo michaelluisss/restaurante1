@@ -8,11 +8,11 @@ class ClientesControllers{
            return res.status(400).json({ message: "Todos os campos são obrigatórios!" });
         }
 
-        const funcionarioAlreadyExists = await clientes.findOne({ 
+        const clienteAlreadyExists = await clientes.findOne({ 
             where: {  nome,idade }
         });
 
-        if (funcionarioAlreadyExists) {
+        if (clienteAlreadyExists) {
             return res.status(400).json({ message: "Esse cliente já existe!" });
         }
 
