@@ -4,10 +4,12 @@ const FuncionariosControllers = require("./controllers/FuncionariosControllers")
 const ClientesControllers = require("./controllers/ClientesControllers");
 const CardapioControllers = require("./controllers/CardapioControllers");
 const MesasControllers = require("./controllers/MesasControllers");
+const PagamentosControllers = require("./controllers/PagamentosControllers");
+/*
 const PedidosControllers = require("./controllers/PedidosControllers");
 const PedidosItensControllers = require("./controllers/PedidosItensControllers");
 const PagamentosControllers = require("./controllers/PagamentosControllers");
-const CaixaControllers = require("./controllers/CaixaControllers");
+const CaixaControllers = require("./controllers/CaixaControllers");*/
 
 const routes = Router();
 
@@ -51,7 +53,7 @@ routes.patch('/mesas/:id/status', MesasControllers.update);
 routes.delete('/mesas/:id', MesasControllers.destroy);
 
 // Controle de Pedidos
-routes.post('/pedidos', PedidosControllers.store);
+/*routes.post('/pedidos', PedidosControllers.store);
 routes.get('/pedidos', PedidosControllers.index);
 routes.get('/pedidos/:id', PedidosControllers.show);
 routes.patch('/pedidos/:id/status', PedidosControllers.update);
@@ -62,16 +64,16 @@ routes.get('/pedidos/:id/itens', PedidosItensControllers.index);
 routes.get('/pedidos/:id/itens/:itemId', PedidosItensControllers.show);
 routes.patch('/pedidos/:id/itens/:itemId', PedidosItensControllers.update);
 routes.delete('/pedidos/:id/itens/:itemId', PedidosItensControllers.destroy);
-
+*/
 // Controle de Pagamentos
 routes.post('/pagamentos', PagamentosControllers.store);
 routes.get('/pagamentos', PagamentosControllers.index);
 routes.get('/pagamentos/:id', PagamentosControllers.show);
-
+/*
 // Controle de Caixa
 routes.post('/caixa/abrir', CaixaControllers.abrir);
 routes.get('/caixa', CaixaControllers.index);
 routes.get('/caixa/:id', CaixaControllers.show);
-routes.patch('/caixa/:id/fechar', CaixaControllers.fechar);
+routes.patch('/caixa/:id/fechar', CaixaControllers.fechar);*/
 
 module.exports = routes;

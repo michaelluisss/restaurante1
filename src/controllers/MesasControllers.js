@@ -1,4 +1,4 @@
-const { mesa: Mesas } = require("../models/")
+const { mesas: Mesas } = require("../models/")
 
 class MesasControllers {
   async store(req, res) {
@@ -9,12 +9,12 @@ class MesasControllers {
         return res.status(400).json({ message: "Todos os campos são obrigatórios!" });
       }
 
-      const mesaInUse = await Mesas.findOne({
-        where: { numero, status }
+      const mesaAlreadyExists = await Mesas.findOne({
+        where: { numero}
       });
 
-      if (mesaInUse) {
-        return res.status(400).json({ message: "Essa mesa ja está em uso!" });
+      if (mesaAlreadyExists) {
+        return res.status(400).json({ message: "Essa mesa existe!" });
       }
 
       const createdMesa = await Mesas.create({ numero,status});
@@ -28,8 +28,8 @@ class MesasControllers {
 
   async index(req, res) {
     try {
-      const itens = await Mesas.findAll();
-      return res.status(200).json(itens);
+      const mesa = await Mesas.findAll();
+      return res.status(200).json(mesa);
     } catch (error) {
       console.error(error);
       return res.status(500).json({ message: "Erro ao listar os dados." });
@@ -39,13 +39,13 @@ class MesasControllers {
   async show(req, res) {
     try {
       const { id } = req.params;
-      const item = await Mesas.findByPk(id);
+      const mesa = await Mesas.findByPk(id);
 
-      if (!item) {
+      if (!mesa) {
         return res.status(404).json({ message: "Mesa não encontrado!" });
       }
 
-      return res.status(200).json(item);
+      return res.status(200).json(mesa);
     } catch (error) {
       console.error(error);
       return res.status(500).json({ message: "Erro ao buscar o dado específico." });
@@ -55,22 +55,22 @@ class MesasControllers {
   async update(req, res) {
     try {
       const { id } = req.params;
-      const { numero,status} = req.body;
+      const { status} = req.body;
 
-      const item = await Mesas.findByPk(id);
-      if (!item) {
-        return res.status(404).json({ message: "Mesa não encontrado!" });
+      const mesa = await Mesas.findByPk(id);
+      if (!mesa) {
+        return res.status(404).json({ message: "Mesa não encontrada!" });
       }
 
       await Mesas.update(
-        { numero,status},
+        { status},
         { where: { id } }
       );
+      return res.status(200).json({ message: "Mesa atualizada!" });
+    }catch (error) {
 
-      return res.status(200).json({ message: "Mesas atualizado!" });
-    } catch (error) {
-      console.error(error);
-      return res.status(500).json({ message: "Erro ao atualizar os dados." });
+      console.error(error.message);
+      return res.status(500).json({ message: error.message });
     }
   }
 
@@ -78,8 +78,8 @@ class MesasControllers {
     try {
       const { id } = req.params;
 
-      const item = await Mesas.findByPk(id);
-      if (!item) {
+      const mesa = await Mesas.findByPk(id);
+      if (!mesa) {
         return res.status(404).json({ message: "Mesa não encontrado!" });
       }
 
