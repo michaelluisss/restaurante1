@@ -5,12 +5,11 @@ const ClientesControllers = require("./controllers/ClientesControllers");
 const CardapioControllers = require("./controllers/CardapioControllers");
 const MesasControllers = require("./controllers/MesasControllers");
 const PagamentosControllers = require("./controllers/PagamentosControllers");
+const CaixaControllers = require("./controllers/CaixaControllers");
 /*
 const PedidosControllers = require("./controllers/PedidosControllers");
 const PedidosItensControllers = require("./controllers/PedidosItensControllers");
-const PagamentosControllers = require("./controllers/PagamentosControllers");
-const CaixaControllers = require("./controllers/CaixaControllers");*/
-
+*/
 const routes = Router();
 
 routes.get("/health", (req, res) => {
@@ -69,11 +68,10 @@ routes.delete('/pedidos/:id/itens/:itemId', PedidosItensControllers.destroy);
 routes.post('/pagamentos', PagamentosControllers.store);
 routes.get('/pagamentos', PagamentosControllers.index);
 routes.get('/pagamentos/:id', PagamentosControllers.show);
-/*
-// Controle de Caixa
-routes.post('/caixa/abrir', CaixaControllers.abrir);
+
+routes.post('/caixa/abrir', CaixaControllers.store);
 routes.get('/caixa', CaixaControllers.index);
 routes.get('/caixa/:id', CaixaControllers.show);
-routes.patch('/caixa/:id/fechar', CaixaControllers.fechar);*/
+routes.patch('/caixa/:id/fechar', CaixaControllers.update);
 
 module.exports = routes;
